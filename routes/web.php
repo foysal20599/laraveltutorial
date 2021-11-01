@@ -22,6 +22,11 @@ Route::get('/', function () {
 Route::get('about', [ContactController::class, 'index']);
 Route::post('contact/store/', [ContactController::class, 'store'])->name('contact.store');
 Route::get('manage', [ContactController::class, 'manage']);
+Route::get('contact/delete/{id}', [ContactController::class, 'delete']);
+Route::get('contact/edit/{id}', [ContactController::class, 'edit']);
+Route::post('contact/update/{id}', [ContactController::class, 'update']);
+Route::get('contact/active/{id}', [ContactController::class, 'active']);
+Route::get('contact/inactive/{id}', [ContactController::class, 'inactive']);
 
 
 

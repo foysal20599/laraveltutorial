@@ -11,32 +11,91 @@
         {{-- {{ dd($contacts)}} --}}
        <section>
            <div class="container">
-               <h3 class="text-center">Contact form manage</h3>
-                <table class="table table-bordered m-5">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Subject</th>
-                            <th>Message</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       @foreach ($contacts as $contact)
-                       <tr>
-                        <td>{{ $contact->email }}</td>
-                        <td>{{ $contact->phone_no }}</td>
-                        <td>{{ $contact->subject }}</td>
-                        <td>{{ $contact->message }}</td>
-                        <td>
-                            <a href="" class="btn btn-sm btn-info">Edit</a>
-                            <a href="" class="btn btn-sm btn-danger">Detete</a>
-                        </td>
-                        </tr>
-                       @endforeach
-                    </tbody>
-                </table>
+            
+               @if (session('success'))
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ session('success')}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+               @endif
+               @if (session('delete'))
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ session('delete')}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+               @endif
+               @if (session('update'))
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ session('update')}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+               @endif
+               @if (session('inactive'))
+               <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ session('inactive')}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+               @endif
+               @if (session('active'))
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ session('active')}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+               @endif
+               <div class="card">
+                   <div class="card-header">
+                    <div class="">
+                        <h3 class="text-center">Contact form manage</h3>
+                        <a href="{{url('about')}}" class="btn btn-success">Back</a>
+                        <a href="{{url('about')}}" class="btn btn-info">Create</a>
+                      </div>
+                   </div>
+                   <div class="card-body">
+                    <table class="table table-bordered m-5 table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+    
+                             @forelse ($contacts as $contact)
+                             {{-- {{dd($contact) }} --}}
+                           <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $contact->email }}</td>
+                            <td>{{ $contact->phone_no }}</td>
+                            <td>{{ $contact->subject }}</td>
+                            <td>{{ $contact->message }}</td>
+                            <td>
+                                <a href="{{'contact/edit/' .$contact->id}}" class="btn btn-sm btn-info">Edit</a>
+
+                                @if ($contact->status == 1)
+                                <a href="{{'contact/active/' .$contact->id}}" class="btn btn-sm btn-success">Active</a>
+                                @else
+                                <a href="{{'contact/inactive/' .$contact->id}}" class="btn btn-sm btn-warning">Inactive</a>
+                                @endif
+                                <a href="{{'contact/delete/' .$contact->id}}" class="btn btn-sm btn-danger">Detete</a>
+                            </td>
+                            @empty
+                            <td colspan="6" class="text-danger"> No result Found! </td>
+                            </tr>
+                           
+                                    
+                            @endforelse
+    
+                        </tbody>
+                    </table>
+                   </div>
+               </div>
+
+              
            </div>
        </section>
 

@@ -19,6 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('phone_no');
             $table->string('subject')->nullable();
             $table->text('message');
+            $table->boolean('status')->default(1)->nullable();
             $table->timestamps();
         });
     }
