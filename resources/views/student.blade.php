@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Student Information </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    @toastr_css
 </head>
 <body>
     
@@ -37,6 +38,7 @@
                             <th scope="col">Class</th>
                             <th scope="col">Roll</th>
                             <th scope="col">Phone</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>
@@ -51,13 +53,42 @@
                             <td>{{ $student->roll }}</td>
                             <td>{{ $student->phone }}</td>
                             <td>
+                                <img class="img-fluid rounded" style="width: 20%;" src="{{asset('images/student')}}/{{$student->image}}" alt="Student">
+                            </td>
+                            <td>
                                 <button class="btn btn-info" type="submit" data-bs-toggle="modal" data-bs-target="#editModal{{$student->id}}"> Edit</button>
                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{$student->id}}"> Delete</button>
                             </td>
                           </tr>
+                                     
+                {{-- student delete modal --}}                                         
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal{{$student->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="{{route('student.destroy', $student->id)}}" method="POST">
+                            @csrf
 
+                            @method('DELETE')
 
-                          
+                            <div class="modal-body">
+                                <input type="hidden" value="{{$student->id}}">
+                                <p class="text-danger text-center">Are you sure to delete??</p>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+
+                {{-- student delete modal end--}}
+                         
                 {{-- student edit modal --}}
                   
                 <div class="modal fade" id="editModal{{$student->id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -68,7 +99,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('student.update', $student->id)}}" method="POST">
+                            <form action="{{route('student.update', $student->id)}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                             @method('PUT')
                             <input type="hidden" value="{{$student->id}}">
@@ -100,6 +131,17 @@
                                 <small class="text-danger"> {{ $message }}</small>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Image:</label>
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="recipient-name" name="image">
+                                @error('image')
+                                <small class="text-danger"> {{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Old Image:</label>
+                                <img class="img-fluid rounded" style="width: 20%;" src="{{asset('images/student')}}/{{$student->image}}" alt="Student">
+                            </div>
                             
                         </div>
                         <div class="modal-footer">
@@ -130,26 +172,6 @@
         </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {{-- student create modal --}}
         <div class="container">
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,7 +182,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('student.store')}}" method="POST">
+                    <form action="{{route('student.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Name:</label>
@@ -185,8 +207,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Phone:</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" id="recipient-name" name="phone">
+                        <input type="number" class="form-control @error('phone') is-invalid @enderror" id="recipient-name" name="phone">
                         @error('phone')
+                        <small class="text-danger"> {{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Image:</label>
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="recipient-name" name="image">
+                        @error('image')
                         <small class="text-danger"> {{ $message }}</small>
                         @enderror
                     </div>
@@ -216,5 +245,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    @jquery
+    @toastr_js
+    @toastr_render
 </body>
 </html>    

@@ -15,5 +15,6 @@ class Student extends Model
         'class',
         'roll',
         'phone',
+        'image',
     ];
 }

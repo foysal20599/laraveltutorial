@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('class');
             $table->string('roll');
             $table->string('phone');
+            $table->string('image')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

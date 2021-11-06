@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'v8.6.3',
-    'version' => '8.6.3.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'e6556ffa6b3c36cb2f03835b75ed642a8dcb05c5',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -413,6 +413,15 @@
         0 => 'v8.64.0',
       ),
     ),
+    'intervention/image' => 
+    array (
+      'pretty_version' => '2.7.0',
+      'version' => '2.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9a8cc99d30415ec0b3f7649e1647d03a55698545',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -431,12 +440,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => 'v8.6.3',
-      'version' => '8.6.3.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'e6556ffa6b3c36cb2f03835b75ed642a8dcb05c5',
     ),
     'laravel/sail' => 
     array (
@@ -812,8 +821,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -1338,6 +1347,15 @@
       array (
       ),
       'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
+    ),
+    'yoeunes/toastr' => 
+    array (
+      'pretty_version' => 'v1.2.6',
+      'version' => '1.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '051bf23958819e3588761d0c0e4cca24a4e67896',
     ),
   ),
 );

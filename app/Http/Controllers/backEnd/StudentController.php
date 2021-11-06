@@ -5,6 +5,10 @@ namespace App\Http\Controllers\backEnd;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+
 
 class StudentController extends Controller
 {
@@ -37,19 +41,33 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'name' => 'required',
             'class' => 'required',
             'roll' => 'required',
             'phone' => 'required',
+            'image' => 'image|mimes:png,jpg, jpeg',
         ]);
+        if($request->image){
+            $imageName = date('y').'-'.date('m').time().'.'.$request->image->extension();
+            Image::make($request->image)->resize(300, 300)->save( 'images/student/'.$imageName);
+         }
+
+        //   if($request->image){
+        //     $imageName = date('y').'-'.date('m').time().'.'.$request->image->extension();  
+        //     $request->image->move(public_path('images/student/'), $imageName);
+        //   }
+        //  return $imageName;
 
         $student = new Student();
         $student->name = $request->name;
         $student->class = $request->class;
         $student->roll = $request->roll;
         $student->phone = $request->phone;
+        $student->image = $imageName;
         $student->save();
+        toastr()->success('Student Created Successfully!');
         return redirect()->back();
     }
 
@@ -89,14 +107,28 @@ class StudentController extends Controller
             'class' => 'required',
             'roll' => 'required',
             'phone' => 'required',
+            'image' => 'image|mimes:png,jpg, jpeg',
         ]);
+      
+        if($request->image){  
+            $student = Student::find($id);
+            $filepath = 'images/student/'. $student->image;
+            if(File::exists($filepath)){
+                File::delete($filepath);
+            }
+            $imageName = date('y').'-'.date('m').time().'.'.$request->image->extension();
+            Image::make($request->image)->resize(300, 300)->save( 'images/student/'.$imageName);
+         }
+
 
         $student =  Student::find($id);
         $student->name = $request->name;
         $student->class = $request->class;
         $student->roll = $request->roll;
         $student->phone = $request->phone;
+        $student->image = $imageName??$student->image;
         $student->save();
+        toastr()->success('Student Update Successfully!');
         return redirect()->back();
     
     }
@@ -109,6 +141,14 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+       
+        $filepath = 'images/student/'. $student->image;
+        if(File::exists($filepath)){
+            File::delete($filepath);
+        }
+        $student->delete();
+        toastr()->error('Student Created Successfully!');
+        return redirect()->back();
     }
 }
