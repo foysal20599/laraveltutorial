@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\backEnd\AboutController;
+use App\Http\Controllers\backEnd\StudentController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::get('contact/edit/{id}', [ContactController::class, 'edit']);
 Route::post('contact/update/{id}', [ContactController::class, 'update']);
 Route::get('contact/active/{id}', [ContactController::class, 'active']);
 Route::get('contact/inactive/{id}', [ContactController::class, 'inactive']);
+
+
+
+// student 
+Route::resource('student', StudentController::class);
 
 
 
