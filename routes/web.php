@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\backEnd\AboutController;
+use App\Http\Controllers\backEnd\HomeController;
 use App\Http\Controllers\backEnd\StudentController;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,59 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// fontEnd
+Route::get('/', [BaseController::class, 'index']);
+
+
+
+
+
+
+
+
+
+
+
+// back end
+Route::get('dashboard', [HomeController::class, 'index']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('about', [ContactController::class, 'index']);
 Route::post('contact/store/', [ContactController::class, 'store'])->name('contact.store');
